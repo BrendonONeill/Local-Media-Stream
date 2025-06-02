@@ -1,0 +1,85 @@
+*,*::after,*::before
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+img
+{
+  width: 100%;
+}
+
+body {
+      font-family: Arial, sans-serif;
+      background-color: #161616;
+    }
+video {
+      width: 100%;
+      max-height: 500px;
+      background: #000;
+    }
+.controls {
+      margin: 15px 0;
+    }
+select, button {
+      padding: 8px;
+      margin-right: 10px;
+    }
+.status {
+      color: #666;
+      font-size: 14px;
+      margin-top: 10px;
+}
+
+.folder-grid
+{
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 1rem;
+}
+
+.folder-card
+{
+  position: relative;
+  color: white;
+  display: block;
+  flex-basis: 11%;
+  background-color: #efefef;
+  height: 290px;
+  border: 2px solid #161616;
+  text-decoration: none;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.folder-card img
+{
+  border-radius: 5px;
+}
+
+.name-container
+{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  padding-top: 20px;
+  background: #25282E;
+background: linear-gradient(0deg, rgba(37, 40, 46, 0.99) 70%, rgba(237, 221, 83, 0) 100%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folder-card:focus
+{
+  border: 2px solid lime;
+}
