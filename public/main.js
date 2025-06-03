@@ -28,5 +28,3 @@ async function generateFolder(folders)
 
 fetchFolder()
 
-
-// make folder for images for each folder

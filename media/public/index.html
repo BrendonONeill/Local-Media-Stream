@@ -4,18 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <video id="videoPlayer" controls>
-        <source src=""  type="video/mp4"/>
     </video>
+
+    <div class="button-grid">
+
+    </div>
 
 <script>
     let vid = document.querySelector("video")
+
     let test = window.location.pathname.split("/")
-    vid.src = `/media/video/${test[2]}`
-    vid.load() 
+    vid.src = `/media/video/${test[2]}/1`
+    vid.load()
+
+    async function getButtonsAmount()
+    {
+        let res = await fetch(`/folder/content/${test[2]}`);
+        let data = await res.json();
+        console.log(data)
+        createButtons(data)
+    }
+
+    function createButtons(data){
+        let grid = document.querySelector(".button-grid")
+        for (let i = 0; i < data; i++) {
+            let button = document.createElement("button")
+            button.textContent = i + 1
+            grid.append(button)
+        }
+
+        let buttons = document.querySelectorAll("button")
+        buttons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                e.preventDefault()
+                console.log(e.target)
+                fetchVideo(e.target.textContent)
+            })
+        })
+    }
+
+    function fetchVideo(number)
+    {
+        vid.src = `/media/video/${test[2]}/${number}`
+        vid.load()
+    }
+
+    getButtonsAmount()
 
 </script>
 </body>

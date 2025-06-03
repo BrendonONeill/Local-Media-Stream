@@ -12,15 +12,28 @@ export function videoPage(req, res){
 
 export function getVideo(req,res)
 {
-    const videoPath =  `${process.env.FOLDERLOCATION}/${req.params.name}/1.mp4` 
-      
-      // Check if file exists
-      fs.stat(videoPath, (err, stat) => {
-        if (err) {
-          console.error('File not found:', err);
-          return res.status(404).send('Video not found');
+    const videoPath =  `${process.env.FOLDERLOCATION}/${req.params.name}/${req.params.number}`
+    let videoType = ""
+    fs.stat(videoPath+".mp4", (err, stat) => {
+        if (stat) {
+          console.log(stat)
+          videoType = "mp4"
+          sendVideo(videoPath+".mp4", stat, videoType, req, res)
         }
-        
+    })
+      
+    fs.stat(videoPath+".mkv", (err, stat) => {
+        if (stat) {
+          videoType = "mkv"
+          sendVideo(videoPath+".mkv", stat, videoType, req, res)
+        }
+    })
+}
+
+
+function sendVideo(videoPath,stat,type, req, res)
+{
+  
         const fileSize = stat.size;
         const range = req.headers.range;
         
@@ -37,22 +50,22 @@ export function getVideo(req,res)
             'Content-Range': `bytes ${start}-${end}/${fileSize}`,
             'Accept-Ranges': 'bytes',
             'Content-Length': chunkSize,
-            'Content-Type': 'video/mp4'
+            'Content-Type': `video/${type}`
           });
           
           // Create stream with specific byte range
           const stream = fs.createReadStream(videoPath, { start, end });
           stream.pipe(res);
-        } else {
+        } 
+        else 
+        {
           // Serve the entire file
           console.log(`Serving entire file (${fileSize} bytes)`);
           
           res.writeHead(200, {
             'Content-Length': fileSize,
-            'Content-Type': 'video/mp4'
-          });
-          
+            'Content-Type': `video/${type}`
+          });  
           fs.createReadStream(videoPath).pipe(res);
         }
-      });
 }

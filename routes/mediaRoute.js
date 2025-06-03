@@ -11,7 +11,7 @@ router
 .get(videoPage)
 
 router
-.route("/video/:name")
+.route("/video/:name/:number")
 .get(getVideo)
 
 export default router

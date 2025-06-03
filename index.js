@@ -3,14 +3,19 @@ import fs from 'fs'
 import dotenv from 'dotenv';
 dotenv.config();
 import path from 'path'
+import { dirname} from 'path';
+import { fileURLToPath } from 'url';
 
 import mediaRouter from './routes/mediaRoute.js'
 import folderRouter from './routes/folderRoutes.js' 
 
 const app = express();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+
 // Serve static files (HTML, CSS, JS)
-app.use(express.static('public'));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 
 

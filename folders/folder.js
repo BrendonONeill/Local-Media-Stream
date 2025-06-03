@@ -22,3 +22,12 @@ export function getImages(req,res){
     res.json(null);
   }
 }
+
+export function getFoldersContentAmount(req,res)
+{
+  const folder = `${process.env.FOLDERLOCATION}/${req.params.name}`;
+  const content = fs.readdirSync(folder);
+  console.log(content)
+  let videos = content.filter((text) => (!text.endsWith("jpg") && !text.endsWith("png")))
+  res.json(videos.length)
+}
