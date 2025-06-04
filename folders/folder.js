@@ -1,20 +1,20 @@
 import fs from 'fs'
+let data = fs.readFileSync('data.json',"utf8")
+export let content = JSON.parse(data)
 
-export function getFolders(req,res) {
-  const folderPath = process.env.FOLDERLOCATION ;
-  const folder = fs.readdirSync(folderPath);
-  res.json(folder)
+export async function getFolders(req,res) {
+  
+  res.json(content.folders)
 }
 
 
 
 export function getImages(req,res){
-
-  const image = `${process.env.FOLDERLOCATION}/${req.params.name}/${req.params.name}.jpg`;
+  const image = content[req.params.name].image
   if(fs.existsSync(image))
   {
     res.sendFile(image,(err) => {
-      console.log(err)
+      
     })
   }
   else
@@ -25,9 +25,15 @@ export function getImages(req,res){
 
 export function getFoldersContentAmount(req,res)
 {
-  const folder = `${process.env.FOLDERLOCATION}/${req.params.name}`;
-  const content = fs.readdirSync(folder);
-  console.log(content)
-  let videos = content.filter((text) => (!text.endsWith("jpg") && !text.endsWith("png")))
-  res.json(videos.length)
+  let videosAmount = content[req.params.name].episodesAmount
+  res.json(videosAmount)
+}
+
+export async function getFilterFolders(req,res) {
+  console.log(req.body)
+  // add filter system for series movie and youtube
+  let data = content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
+
+  // I want to try compare names to text in box 
+  res.json(data)
 }

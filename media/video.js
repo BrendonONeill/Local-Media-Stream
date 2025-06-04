@@ -1,6 +1,7 @@
 import fs from "fs"
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { content } from "../folders/folder.js";
 
 
 export function videoPage(req, res){
@@ -12,22 +13,26 @@ export function videoPage(req, res){
 
 export function getVideo(req,res)
 {
-    const videoPath =  `${process.env.FOLDERLOCATION}/${req.params.name}/${req.params.number}`
+    const videoPath = content[req.params.name][req.params.number].path
     let videoType = ""
-    fs.stat(videoPath+".mp4", (err, stat) => {
+    if(content[req.params.name][req.params.number].videoType == "mp4")
+    {
+      fs.stat(videoPath, (err, stat) => {
         if (stat) {
-          console.log(stat)
           videoType = "mp4"
-          sendVideo(videoPath+".mp4", stat, videoType, req, res)
+          sendVideo(videoPath, stat, videoType, req, res)
         }
     })
-      
-    fs.stat(videoPath+".mkv", (err, stat) => {
+    }
+    else if(content[req.params.name][req.params.number].videoType == "mkv")
+    {
+      fs.stat(videoPath, (err, stat) => {
         if (stat) {
           videoType = "mkv"
-          sendVideo(videoPath+".mkv", stat, videoType, req, res)
+          sendVideo(videoPath, stat, videoType, req, res)
         }
     })
+    }
 }
 
 

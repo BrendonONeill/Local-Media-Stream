@@ -11,6 +11,12 @@ img
   width: 100%;
 }
 
+nav, footer
+{
+  padding: 2rem;
+  background-color: #0466c8;
+}
+
 body {
       font-family: Arial, sans-serif;
       background-color: #161616;
@@ -33,16 +39,58 @@ select, button {
       margin-top: 10px;
 }
 
+form
+{
+  position: relative;
+  width: 40%;
+  margin: auto;
+}
+
+form img
+{
+  position: absolute;
+  top: 0;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+}
+
+.name-filter
+{
+  background-color: #efefef;
+  border-radius: 30px;
+  width: 100%;
+  height: 40px;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.filter
+{
+  padding: 1rem 2rem;
+}
+
+.button-filter
+{
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #0466c8;
+  color: white;
+  font-weight: bold;
+}
+
 .folder-grid
 {
   padding: 2rem;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
   margin: auto;
   gap: 1rem;
+  min-height: 80vh;
 }
 
 .folder-card
@@ -73,7 +121,7 @@ select, button {
   height: 100px;
   padding-top: 20px;
   background: #25282E;
-background: linear-gradient(0deg, rgba(37, 40, 46, 0.99) 70%, rgba(237, 221, 83, 0) 100%);
+  background: linear-gradient(0deg, rgba(37, 40, 46, 0.99) 70%, rgba(237, 221, 83, 0) 100%);
   z-index: 3;
   display: flex;
   align-items: center;
@@ -82,5 +130,5 @@ background: linear-gradient(0deg, rgba(37, 40, 46, 0.99) 70%, rgba(237, 221, 83,
 
 .folder-card:focus
 {
-  border: 2px solid lime;
+  border: 2px solid white;
 }

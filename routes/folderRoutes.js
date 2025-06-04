@@ -1,4 +1,4 @@
-import { getFolders, getImages, getFoldersContentAmount } from '../folders/folder.js'
+import { getFolders, getImages, getFoldersContentAmount, getFilterFolders } from '../folders/folder.js'
 import express from 'express'
 
 const router = express.Router()
@@ -17,6 +17,9 @@ router
 .route("/image/:name")
 .get(getImages)
 
+router
+.route("/filter/:text")
+.post(getFilterFolders)
 
 
 
