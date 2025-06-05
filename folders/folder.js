@@ -30,10 +30,119 @@ export function getFoldersContentAmount(req,res)
 }
 
 export async function getFilterFolders(req,res) {
-  console.log(req.body)
-  // add filter system for series movie and youtube
-  let data = content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
-
-  // I want to try compare names to text in box 
+  
+  let text = req.params.text
+  let data = []
+  
+    data.push(content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text))))
+  if(text.length > 3)
+  {
+    data.push(test(text,content))
+    let removedDups = []
+    data = data.flat(2)
+    for (let i = 0; i < data.length; i++) {
+    if(!removedDups.includes(data[i]))
+    {
+      removedDups.push(data[i])
+    }
+    }
+    data = removedDups
+  }
+  console.log("client",data)
+  data = data.flat(2)
   res.json(data)
+}
+
+
+
+function levenshteinDistance(s1, s2) {
+  const m = s1.length;
+  const n = s2.length;
+
+  const dp = Array(m + 1)
+    .fill(null)
+    .map(() => Array(n + 1).fill(0));
+  
+  for (let i = 0; i <= m; i++) {
+    dp[i][0] = i;
+  }
+
+  for (let j = 0; j <= n; j++) {
+    dp[0][j] = j;
+  }
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1, // Deletion
+        dp[i][j - 1] + 1, // Insertion
+        dp[i - 1][j - 1] + cost // Substitution or Match
+      );
+    }
+  }
+  let number = dp[m][n];
+  if(n <= 3 || n <= 3)
+  {
+    if(number <= 1)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+  else if(n <= 6)
+  {
+    if(number < 3)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+  else
+  {
+    if(number < 6)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+}
+
+
+function test(text, content)
+{
+  let split = text.split(" ")
+    let inform = []
+    for (let i = 0; i < split.length; i++) {
+      let a = content.folders.filter((folder) => {
+        let b = folder.split(" ")
+        let match = false
+        for (let j = 0; j < b.length; j++) {
+          let k =  levenshteinDistance(split[i].toLowerCase(),b[j].toLowerCase())
+          if(k)
+          {
+            match = true
+            break
+          }
+        }
+        if(match)
+        {
+          inform.push(folder)
+        }
+      })
+    }
+    let g = inform.flat(2)
+    console.log(g)
+    return g
 }

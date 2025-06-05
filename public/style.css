@@ -132,3 +132,8 @@ form img
 {
   border: 2px solid white;
 }
+
+.folder-card:hover
+{
+  border: 2px solid white;
+}
