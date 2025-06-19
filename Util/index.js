@@ -54,7 +54,9 @@ function getFoldersContentAmount(name)
   return videos.length
 }
 
-
+// rewrite
+// file name will be like this name of series/movie type then number lego-m-1 = lego-movie-ep1
+// look in folder see all files and check their numbers  
 async function getVideos(name,number)
 {
     const videoPath =  `${process.env.FOLDERLOCATION}${name}/${number}`

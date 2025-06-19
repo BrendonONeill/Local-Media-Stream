@@ -119,7 +119,8 @@ function levenshteinDistance(s1, s2) {
   }
 }
 
-
+// need to redo with type filtering
+// clean up filtering try to place closes filter near start (Think about it)
 function test(text, content)
 {
   let split = text.split(" ")
