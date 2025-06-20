@@ -29,31 +29,75 @@ export function getFoldersContentAmount(req,res)
   res.json(videosAmount)
 }
 
+
+// Kinda working needs fine tuning
+// doesn't filter with no text
+// In Levenshtein Distance sort by closest target
 export async function getFilterFolders(req,res) {
   
-  let text = req.params.text
-  let data = []
+  let text = req.params.text ?? ""
+  let filters = req.body.types
+  let arrTypes = null
+  arrTypes  = activetypes(filters)
+  let data = content.folders
   
-    data.push(content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text))))
-  if(text.length > 3)
+    
+  if(text.length >= 1)
   {
-    data.push(test(text,content))
-    let removedDups = []
-    data = data.flat(2)
-    for (let i = 0; i < data.length; i++) {
-    if(!removedDups.includes(data[i]))
+    data = content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
+    data = data.filter((folder) => {
+        if(!arrTypes)
+        {
+          return true
+        }
+        for(let i = 0; i < arrTypes.length; i++)
+        {
+          if(content[folder].types[arrTypes[i]])
+          {
+            return true
+          }
+        }
+        return false
+    })
+    if(text.length > 3)
     {
-      removedDups.push(data[i])
+      data.push(test(text,content))
+      let removedDups = []
+      data = data.flat(2)
+      for (let i = 0; i < data.length; i++) {
+      if(!removedDups.includes(data[i]))
+      {
+        removedDups.push(data[i])
+      }
+      }
+      data = removedDups
     }
-    }
-    data = removedDups
   }
   console.log("client",data)
   data = data.flat(2)
-  res.json(data)
+  res.json({"folders":data,"content":content})
 }
 
+function activetypes(types)
+{
+  let typesArr = []
+  if(types.series)
+  {typesArr.push("series")}
+  if(types.movies)
+  {typesArr.push("movie")} 
+  if(types.anime)
+  {typesArr.push("anime")} 
+  if(types.youtube)
+  {typesArr.push("youtube")} 
+  if(types.kids)
+  {typesArr.push("kids")} 
 
+  if(typesArr.length < 1)
+  {
+    return null
+  }
+  return typesArr 
+}
 
 function levenshteinDistance(s1, s2) {
   const m = s1.length;
