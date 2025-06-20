@@ -75,11 +75,19 @@ form img
 {
   padding: 1rem;
   border-radius: 5px;
-  background-color: #0466c8;
+   background-color: hwb(210 2% 54%);
   color: white;
   font-weight: bold;
   min-width: 85px;
   cursor: pointer;
+  border: 2px solid #161616;
+}
+
+.active
+{
+ 
+  background-color: #0466c8;
+  border: 2px solid white;
 }
 
 .folder-grid
@@ -123,10 +131,12 @@ form img
 
 .types
 {
- color: #efefef;
+ color: white;
+ font-weight: bold;
  background-color: #0466c8;
  padding: 0.3rem;
  border-radius: 5px;
+ border: 2px solid white;
 }
 
 .folder-card img

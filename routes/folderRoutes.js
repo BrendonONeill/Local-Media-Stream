@@ -21,6 +21,10 @@ router
 .route("/filter/:text")
 .post(getFilterFolders)
 
+router
+.route("/filter")
+.post(getFilterFolders)
+
 
 
 
