@@ -78,6 +78,8 @@ form img
   background-color: #0466c8;
   color: white;
   font-weight: bold;
+  min-width: 85px;
+  cursor: pointer;
 }
 
 .folder-grid
@@ -105,6 +107,26 @@ form img
   text-decoration: none;
   overflow: hidden;
   border-radius: 5px;
+}
+
+.types-container
+{
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  top: 0;
+  left: 0;
+  min-width: 100px;
+}
+
+.types
+{
+ color: #efefef;
+ background-color: #0466c8;
+ padding: 0.3rem;
+ border-radius: 5px;
 }
 
 .folder-card img
@@ -136,4 +158,41 @@ form img
 .folder-card:hover
 {
   border: 2px solid white;
+}
+
+
+@media (min-width: 1250px) {
+ 
+
+  .folder-grid
+  {
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin: auto;
+    gap: 1rem;
+    min-height: 80vh;
+  }
+
+  .folder-card
+{
+  position: relative;
+  color: white;
+  display: block;
+  flex-basis: 13%;
+  background-color: #efefef;
+  height: 290px;
+  border: 2px solid #161616;
+  text-decoration: none;
+  overflow: hidden;
+  border-radius: 5px;
+}
+}
+
+
+@media (max-width: 1900px) {
+  /* … */
 }

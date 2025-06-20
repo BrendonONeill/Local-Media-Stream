@@ -4,7 +4,7 @@ export let content = JSON.parse(data)
 
 export async function getFolders(req,res) {
   
-  res.json(content.folders)
+  res.json(content)
 }
 
 
@@ -147,3 +147,4 @@ function test(text, content)
     console.log(g)
     return g
 }
+

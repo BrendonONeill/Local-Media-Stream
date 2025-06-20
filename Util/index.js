@@ -7,44 +7,38 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-let data = {}
-
+let data = {};
 const folderPath = process.env.FOLDERLOCATION ;
-const allFolders = fs.readdirSync(folderPath);
-data.folders = allFolders
-for (let i = 0; i < allFolders.length; i++) {
-    data[allFolders[i]] = {}
-}
-for (let i = 0; i < allFolders.length; i++) {
-    let image = `${process.env.FOLDERLOCATION}/${allFolders[i]}/${allFolders[i]}.jpg`;
-    if(fs.existsSync(image))
-    {
-        data[allFolders[i]].image = `${process.env.FOLDERLOCATION}${allFolders[i]}/${allFolders[i]}.jpg`;
-    }
-    else
-    {
-        data[allFolders[i]].image = null
-    }
-}
-for (let i = 0; i < allFolders.length; i++) {
-    let amount = getFoldersContentAmount(allFolders[i])
-    data[allFolders[i]].episodesAmount = amount
-    if(amount == 1)
-    {
-        data[allFolders[i]].movie = true 
-    }
-    else
-    {
-        data[allFolders[i]].movie = false
+
+async function main()
+{
+    const allFolders = fs.readdirSync(folderPath);
+    data.folders = allFolders
+
+    for (let i = 0; i < allFolders.length; i++) {
+        data[allFolders[i]] = {}
     }
 
-    for (let j = 0; j < amount; j++) {
-        data[allFolders[i]][j+1] = {path : "", videoType: ""}
-        getVideos(allFolders[i], j+1)
+    for (let i = 0; i < allFolders.length; i++) {
+        let image = `${process.env.FOLDERLOCATION}/${allFolders[i]}/${allFolders[i]}.jpg`;
+        if(fs.existsSync(image))
+        {
+            data[allFolders[i]].image = `${process.env.FOLDERLOCATION}${allFolders[i]}/${allFolders[i]}.jpg`;
+        }
+        else
+        {
+            data[allFolders[i]].image = null
+        }
     }
+
+    for (let i = 0; i < allFolders.length; i++) {
+        let amount = getFoldersContentAmount(allFolders[i])
+        data[allFolders[i]].episodesAmount = amount
+    }
+
+    const promises = allFolders.map(folder => getVideosAndTypes(folder,data[folder].episodesAmount,folderPath+folder))
+    await Promise.all(promises);
 }
-
-
 
 function getFoldersContentAmount(name)
 {
@@ -54,26 +48,53 @@ function getFoldersContentAmount(name)
   return videos.length
 }
 
-// rewrite
-// file name will be like this name of series/movie type then number lego-m-1 = lego-movie-ep1
-// look in folder see all files and check their numbers  
-async function getVideos(name,number)
+async function getVideosAndTypes(folder,amount,folderPath)
 {
-    const videoPath =  `${process.env.FOLDERLOCATION}${name}/${number}`
-    if(fs.existsSync(videoPath+".mp4"))
-    {
-          data[name][number].path = videoPath+".mp4"
-          data[name][number].videoType = "mp4"
-          return  
+    for (let j = 0; j < amount; j++) {
+        data[folder][j+1] = {path : "", videoType: ""}
     }
-    else if(fs.existsSync(videoPath+".mkv"))
-    {
-        data[name][number].path = videoPath+".mkv"
-        data[name][number].videoType = "mkv"
-        return
+
+    const files = fs.readdirSync(folderPath);
+    for (let i = 0; i < files.length; i++) {
+        let test = files[i].split("__")
+        if(test.length == 3)
+        {
+            //fix this to run once at the start
+            let type = test[test.length - 2];
+            data[folder].types = typeChecker(type);
+
+
+            let splitNum = test[test.length - 1].split(".");
+            data[folder][splitNum[0]].path = `${folderPath}/${files[i]}`;
+            data[folder][splitNum[0]].videoType = splitNum[1]
+        }
     }
+
 }
 
+function typeChecker(type)
+{
+    let types = {movie: false, series: false, anime:false, kids: false, youtube: false}
+    if(type == "as")
+    {types.series = types.anime = true}
+    else if(type == "am")
+    {types.movie = types.anime = true}
+    if(type == "km")
+    {types.movie = types.kids = true}
+    if(type == "ks")
+    {types.series = types.kids = true}
+    if(type == "m")
+    {types.movie = true}
+    if(type == "s")
+    {types.series = true}
+    if(type == "y")
+    {types.youtube = true}
+
+    return types
+}
+
+
+main()
 console.log(data)
 data = JSON.stringify(data)
 fs.writeFileSync("data.json",data)
