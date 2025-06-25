@@ -22,7 +22,6 @@ const typeFilter =
 
 async function fetchFolder()
 {
-    debugger
     const res = await fetch("/folder")
     const data = await res.json()
     grid.innerHTML = ""

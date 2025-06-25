@@ -1,6 +1,27 @@
 import fs from 'fs'
+import cron from 'node-cron'
+import { spawn } from 'child_process';
+
 let data = fs.readFileSync('data.json',"utf8")
 export let content = JSON.parse(data)
+
+
+cron.schedule('*/1 * * * *', () => {
+  console.log('running a task every minute');
+  let objectUpdateSpawn = spawn("node",["Util/index.js"])
+
+  objectUpdateSpawn.on("close",  async () => {
+    fs.readFile('data.json',"utf8",(err,data) => {
+      if(err)
+      {
+        return null
+      }
+      content = JSON.parse(data)
+      console.log("Object Updated successfully!")
+      // set up a ws to update selection
+    })
+  })
+});
 
 export async function getFolders(req,res) {
   
@@ -99,6 +120,12 @@ function activetypes(types)
   return typesArr 
 }
 
+/**
+ * Uses the Levenshtein Distance algo to check two words 
+ * @param {string} s1 user input text
+ * @param {string} s2 name or word compared to users string
+ * @returns {boolean} returns if there is a match
+ */
 function levenshteinDistance(s1, s2) {
   const m = s1.length;
   const n = s2.length;

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { content } from "../folders/folder.js";
 
 
+
 export function videoPage(req, res){
     
     const __dirname = dirname(fileURLToPath(import.meta.url));

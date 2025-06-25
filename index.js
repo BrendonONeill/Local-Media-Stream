@@ -6,10 +6,14 @@ import path from 'path'
 import { dirname} from 'path';
 import { fileURLToPath } from 'url';
 
+
 import mediaRouter from './routes/mediaRoute.js'
-import folderRouter from './routes/folderRoutes.js' 
+import folderRouter from './routes/folderRoutes.js'
+
 
 const app = express();
+
+
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.json({}));
