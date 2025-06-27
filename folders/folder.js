@@ -6,10 +6,9 @@ let data = fs.readFileSync('data.json',"utf8")
 export let content = JSON.parse(data)
 
 
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/30 * * * *', () => {
   console.log('running a task every minute');
   let objectUpdateSpawn = spawn("node",["Util/index.js"])
-
   objectUpdateSpawn.on("close",  async () => {
     fs.readFile('data.json',"utf8",(err,data) => {
       if(err)
@@ -50,53 +49,30 @@ export function getFoldersContentAmount(req,res)
   res.json(videosAmount)
 }
 
-
-// Kinda working needs fine tuning
-// doesn't filter with no text
-// In Levenshtein Distance sort by closest target
-export async function getFilterFolders(req,res) {
-  
+export function getTest(req,res)
+{
   let text = req.params.text ?? ""
   let filters = req.body.types
   let arrTypes = null
   arrTypes  = activetypes(filters)
   let data = content.folders
-  
-    
-  if(text.length >= 1)
+  if(text.length < 1)
   {
-    data = content.folders.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
-    data = data.filter((folder) => {
-        if(!arrTypes)
-        {
-          return true
-        }
-        for(let i = 0; i < arrTypes.length; i++)
-        {
-          if(content[folder].types[arrTypes[i]])
-          {
-            return true
-          }
-        }
-        return false
-    })
-    if(text.length > 3)
-    {
-      data.push(test(text,content))
-      let removedDups = []
-      data = data.flat(2)
-      for (let i = 0; i < data.length; i++) {
-      if(!removedDups.includes(data[i]))
-      {
-        removedDups.push(data[i])
-      }
-      }
-      data = removedDups
-    }
+    data = typeFilter(data,arrTypes)
+    res.json({"folders":data,"content":content})
   }
-  console.log("client",data)
-  data = data.flat(2)
-  res.json({"folders":data,"content":content})
+  else if(text.length < 3)
+  {
+    data = typeFilter(data,arrTypes)
+    data = data.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
+    res.json({"folders":data,"content":content})
+  }
+  else
+  {
+    data = typeFilter(data,arrTypes)
+    data = advancedFiltering(text,data)
+    res.json({"folders":data,"content":content})
+  }
 }
 
 function activetypes(types)
@@ -119,6 +95,26 @@ function activetypes(types)
   }
   return typesArr 
 }
+
+function typeFilter(data, arrTypes)
+{
+  let filterData = data.filter((folder) => {
+        if(!arrTypes)
+        {
+          return true
+        }
+        for(let i = 0; i < arrTypes.length; i++)
+        {
+          if(content[folder].types[arrTypes[i]])
+          {
+            return true
+          }
+        }
+        return false
+  })
+  return filterData
+}
+
 
 /**
  * Uses the Levenshtein Distance algo to check two words 
@@ -159,63 +155,65 @@ function levenshteinDistance(s1, s2) {
   {
     if(number <= 1)
     {
-      return true
+      return [true,number]
     }
     else
     {
-      return false
+      return [false,null]
     }
   }
   else if(n <= 6)
   {
     if(number < 3)
     {
-      return true
+      return [true,number]
     }
     else
     {
-      return false
+      return [false,null]
     }
   }
   else
   {
     if(number < 6)
     {
-      return true
+      return [true,number]
     }
     else
     {
-      return false
+      return [false,number]
     }
   }
 }
 
-// need to redo with type filtering
-// clean up filtering try to place closes filter near start (Think about it)
-function test(text, content)
+function advancedFiltering(text, content)
 {
-  let split = text.split(" ")
+    let split = text.split(" ")
     let inform = []
     for (let i = 0; i < split.length; i++) {
-      let a = content.folders.filter((folder) => {
-        let b = folder.split(" ")
+      let a = content.filter((folder) => {
+        let nameSplit = folder.split(" ")
         let match = false
-        for (let j = 0; j < b.length; j++) {
-          let k =  levenshteinDistance(split[i].toLowerCase(),b[j].toLowerCase())
-          if(k)
+        for (let j = 0; j < nameSplit.length; j++) {
+          let k =  levenshteinDistance(split[i].toLowerCase(),nameSplit[j].toLowerCase())
+          if(k[0])
           {
             match = true
+            inform.push([folder,k[1]])
             break
           }
         }
-        if(match)
-        {
-          inform.push(folder)
-        }
       })
     }
-    let g = inform.flat(2)
-    console.log(g)
-    return g
+    let sortedData = inform.sort((a, b) => (a[1] - b[1]))
+    let returnArr = []
+    for(let i = 0; i < sortedData.length; i++)
+    {
+      if(!returnArr.includes(sortedData[i][0]))
+      {
+        returnArr.push(sortedData[i][0])
+      }
+    }
+    return returnArr
 }
 
