@@ -55,6 +55,33 @@ form img
   height: 40px;
 }
 
+.sub-nav
+{
+  display: flex;
+}
+
+.info-block
+{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  color: #efefef;
+  align-items: center;
+  gap: 0.5rem;
+  flex-basis: 32%;
+}
+
+.info-block span
+{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.info-block span img
+{
+  flex-basis: 20%;
+}
+
 .name-filter
 {
   background-color: #efefef;
@@ -69,6 +96,7 @@ form img
 .filter
 {
   padding: 1rem 2rem;
+  flex-basis: 65%;
 }
 
 .button-filter
@@ -123,7 +151,7 @@ form img
   z-index: 5;
   display: flex;
   gap: 0.3rem;
-  padding: 0.3rem;
+  padding: 0.2rem;
   top: 0;
   left: 0;
   min-width: 100px;
@@ -134,9 +162,11 @@ form img
  color: white;
  font-weight: bold;
  background-color: #0466c8;
- padding: 0.3rem;
+ padding: 0 0.3rem;
  border-radius: 5px;
  border: 2px solid white;
+ min-width: 25px;
+ min-height: 25px;
 }
 
 .folder-card img

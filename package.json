@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "node --watch index.js",
     "startup": "node Util/index.js",
-    "start": "npm run startup && npm run dev"
+    "start": "npm run startup && npm run dev",
+    "move": "node Util/fileMoving.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "adm-zip": "^0.5.16",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

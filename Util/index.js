@@ -1,5 +1,5 @@
 // This creates a json file that will find all folders list them out 
-// find all images for each folder and link ythe images with their folders
+// find all images for each folder and link the images with their folders
 // find all eps and their links
 
 import fs from 'fs'
@@ -55,16 +55,18 @@ async function getVideosAndTypes(folder,amount,folderPath)
     }
 
     const files = fs.readdirSync(folderPath);
+    let checked = false
     for (let i = 0; i < files.length; i++) {
-        let test = files[i].split("__")
-        if(test.length == 3)
+        let fileSplit = files[i].split("__")
+        if(fileSplit.length == 3)
         {
-            //fix this to run once at the start
-            let type = test[test.length - 2];
-            data[folder].types = typeChecker(type);
-
-
-            let splitNum = test[test.length - 1].split(".");
+            if(!checked)
+            {
+                let type = fileSplit[fileSplit.length - 2];
+                data[folder].types = typeChecker(type);
+                checked = true;
+            }
+            let splitNum = fileSplit[fileSplit.length - 1].split(".");
             data[folder][splitNum[0]].path = `${folderPath}/${files[i]}`;
             data[folder][splitNum[0]].videoType = splitNum[1]
         }
@@ -95,6 +97,6 @@ function typeChecker(type)
 
 
 main()
-console.log(data)
+//console.log(data)
 data = JSON.stringify(data)
 fs.writeFileSync("data.json",data)

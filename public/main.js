@@ -58,23 +58,23 @@ function arrayOfTypes(data)
     let arr = []
     if(data["series"])
     { 
-        arr.push(`<p class="types">Series</p>`)
+        arr.push(`<p class="types"><img src="series.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.movie)
     { 
-        arr.push(`<p class="types">Movie</p>`)
+        arr.push(`<p class="types"><img src="movie.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.anime)
     { 
-        arr.push(`<p class="types">Anime</p>`)
+        arr.push(`<p class="types"><img src="anime.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.kids)
     { 
-        arr.push(`<p class="types">Kids</p>`)
+        arr.push(`<p class="types"><img src="kid.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.youtube)
     { 
-        arr.push(`<p class="types">YouTube</p>`)
+        arr.push(`<p class="types"><img src="youtube.svg" alt="My Image" width="20" height="20"></p>`)
     }
     return arr
 }
