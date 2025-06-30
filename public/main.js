@@ -43,7 +43,7 @@ async function generateFolder(folders, data)
         `
         <img src="/folder/image/${folders[i]}" alt="My Image" width="400">
         <div class="name-container"> 
-        <h3>${folders[i].replace(/_/g, " ")}</h3>
+        <p>${folders[i].replace(/_/g, " ")}</p>
         </div>
         `
         card.innerHTML = cardContent
@@ -58,23 +58,23 @@ function arrayOfTypes(data)
     let arr = []
     if(data["series"])
     { 
-        arr.push(`<p class="types"><img src="series.svg" alt="My Image" width="20" height="20"></p>`)
+        arr.push(`<p class="types"><img src="images/series-d.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.movie)
     { 
-        arr.push(`<p class="types"><img src="movie.svg" alt="My Image" width="20" height="20"></p>`)
+        arr.push(`<p class="types"><img src="images/movie-d.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.anime)
     { 
-        arr.push(`<p class="types"><img src="anime.svg" alt="My Image" width="20" height="20"></p>`)
+        arr.push(`<p class="types"><img src="images/anime-d.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.kids)
     { 
-        arr.push(`<p class="types"><img src="kid.svg" alt="My Image" width="20" height="20"></p>`)
+        arr.push(`<p class="types"><img src="images/kid-d.svg" alt="My Image" width="20" height="20"></p>`)
     }
     if(data.youtube)
     { 
-        arr.push(`<p class="types"><img src="youtube.svg" alt="My Image" width="20" height="20"></p>`)
+        arr.push(`<p class="types"><img src="images/youtube-d.svg" alt="My Image" width="20" height="20"></p>`)
     }
     return arr
 }
