@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 *,*::after,*::before
 {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
 }
 
 img
@@ -63,7 +66,7 @@ form img
 .info-block
 {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 75px 75px 92px 75px 60px;
   color: #efefef;
   align-items: center;
   gap: 0.5rem;
@@ -161,12 +164,15 @@ form img
 {
  color: white;
  font-weight: bold;
- background-color: #0466c8;
+ background-color: #FFA305;
  padding: 0 0.3rem;
  border-radius: 5px;
- border: 2px solid white;
+ border: 2px solid hsl(0, 0%, 12%);
  min-width: 25px;
  min-height: 25px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 
 .folder-card img
@@ -188,6 +194,13 @@ form img
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.name-container p
+{
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 .folder-card:focus
