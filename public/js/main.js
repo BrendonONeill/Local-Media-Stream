@@ -1,4 +1,4 @@
-
+ "use strict"
 
 const grid = document.querySelector(".folder-grid")
 const filterInput = document.querySelector(".name-filter")
@@ -54,7 +54,6 @@ async function generateFolder(folders, data)
 
 function arrayOfTypes(data)
 {
-    console.log(data)
     let arr = []
     if(data["series"])
     { 

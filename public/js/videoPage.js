@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="alternate" href="images/media.ico" type="application/atom+xml" title="Atom">
-    <title>Video Stream</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <video id="videoPlayer" controls>
-        
-    </video>
-
-    <div class="button-grid">
-
-    </div>
-
-<script>
+    "use strict"
     let vid = document.querySelector("video")
 
     let test = window.location.pathname.split("/")
@@ -27,7 +9,6 @@
     {
         let res = await fetch(`/folder/content/${test[2]}`);
         let data = await res.json();
-        console.log(data)
         createButtons(data)
     }
 
@@ -35,6 +16,7 @@
         let grid = document.querySelector(".button-grid")
         for (let i = 0; i < data; i++) {
             let button = document.createElement("button")
+            button.classList.add("video-button")
             button.textContent = i + 1
             grid.append(button)
         }
@@ -43,7 +25,6 @@
         buttons.forEach((button) => {
             button.addEventListener("click", (e) => {
                 e.preventDefault()
-                console.log(e.target)
                 fetchVideo(e.target.textContent)
             })
         })
@@ -56,7 +37,3 @@
     }
 
     getButtonsAmount()
-
-</script>
-</body>
-</html>

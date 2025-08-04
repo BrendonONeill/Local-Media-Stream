@@ -15,7 +15,7 @@ const app = express();
 
 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+export const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.json({}));
 app.use(express.urlencoded({ extended: true }));
 
