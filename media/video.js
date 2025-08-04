@@ -1,14 +1,13 @@
 import fs from "fs"
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import {join } from 'path';
+import { __dirname } from "../index.js";
 import { content } from "../folders/folder.js";
 
 
 
 export function videoPage(req, res){
     
-    const __dirname = dirname(fileURLToPath(import.meta.url));
-    res.sendFile(join(__dirname, 'public/index.html'));
+    res.sendFile(join(__dirname, 'public', 'video.html'));
 };
 
 

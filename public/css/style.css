@@ -106,12 +106,17 @@ form img
 {
   padding: 1rem;
   border-radius: 5px;
-   background-color: hwb(210 2% 54%);
+  background-color: hwb(210 2% 54%);
   color: white;
   font-weight: bold;
   min-width: 85px;
   cursor: pointer;
   border: 2px solid #161616;
+}
+
+.button-filter:hover
+{
+  background-color: #0466c8;
 }
 
 .active
@@ -206,24 +211,91 @@ form img
 .folder-card:focus
 {
   border: 2px solid white;
+  transform: scale(1.05);
 }
 
 .folder-card:hover
 {
   border: 2px solid white;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.nav-video
+{
+  padding: 0.6rem 1rem;
+}
+
+.video-container
+{
+  width: 100%;
+  padding: 2rem;
+  padding-block: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#videoPlayer
+{
+  width: 50%;
+}
+
+.button-grid
+{
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 80%;
+  margin: auto;
+}
+.video-button
+{
+  padding: 1rem;
+  background-color: #0466c8;
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.video-main
+{
+  min-height: 90vh;
+}
+
+.back-button
+{
+  display: flex;
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+  padding: 0.4rem;
+  cursor: pointer;
+  background-color: white;
+}
+
+.back-button:hover
+{
+  background-color: #c4c4c4;
 }
 
 
-@media (min-width: 1250px) {
+@media (min-width: 1000px) {
  
 
   .folder-grid
   {
-    padding: 2rem;
+    padding-inline: 4rem 2rem;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content:flex-start ;
     width: 100%;
     margin: auto;
     gap: 1rem;
@@ -235,7 +307,7 @@ form img
   position: relative;
   color: white;
   display: block;
-  flex-basis: 13%;
+  flex-basis: 18%;
   background-color: #efefef;
   height: 290px;
   border: 2px solid #161616;
@@ -246,6 +318,16 @@ form img
 }
 
 
+
+
 @media (max-width: 1900px) {
-  /* … */
+  .folder-grid
+  {
+    width: 100%;
+  }
+
+  .folder-card
+  {
+    flex-basis: 15%;
+  }
 }
