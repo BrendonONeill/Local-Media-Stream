@@ -35,6 +35,18 @@ export function getVideo(req,res)
     }
 }
 
+export function getSub(req, res)
+{
+  const videoPath = content[req.params.name][req.params.number].subtitles
+  if(videoPath != "")
+  {
+    res.sendFile(videoPath)
+  }
+  else
+  {
+    res.json(null)
+  }
+}
 
 function sendVideo(videoPath,stat,type, req, res)
 {

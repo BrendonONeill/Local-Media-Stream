@@ -165,6 +165,19 @@ form img
   min-width: 100px;
 }
 
+.lang-container
+{
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  top: 0;
+  right: 0;
+  min-width: 100px;
+}
+
 .types
 {
  color: white;

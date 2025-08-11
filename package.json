@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch index.js",
-    "startup": "node Util/index.js",
-    "start": "npm run startup && npm run dev",
-    "move": "node Util/fileMoving.js"
+    "startup": "node Util/videosInformation.js",
+    "start": "npm run startup && npm run dev"
   },
   "author": "",
   "license": "ISC",

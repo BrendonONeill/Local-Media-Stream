@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/images/media.ico" type="image/x-icon">
     <title>Video Stream</title>
-    <script type="module" defer async src="/js/videoPage.js"></script>
+    <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css">
+    <script defer async src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
+    <script type="module" defer async src="/js/videoPage.js"></script>
 </head>
 <body>
     <nav class="nav-video">
@@ -14,7 +16,9 @@
     </nav>
     <main class="video-main">
         <div class="video-container">
-        <video id="videoPlayer" controls></video>
+        <video id="videoPlayer" controls>
+            <track kind="captions" src="" srclang="en" label="English" default ></track>
+        </video>
     </div>
 
     <div class="button-grid">
