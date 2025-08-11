@@ -25,7 +25,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 
 
 
-app.use("/media",mediaRouter)
+app.use("/v",mediaRouter)
 app.use("/folder",folderRouter)
 
 

@@ -1,9 +1,13 @@
     "use strict"
     let vid = document.querySelector("video")
+    let track = document.querySelector("track")
 
     let test = window.location.pathname.split("/")
-    vid.src = `/media/video/${test[2]}/1`
+    track.src = `/v/sub/${test[2]}/1`
+    vid.src = `/v/video/${test[2]}/1`
     vid.load()
+
+    console.log(vid.textTracks)
 
     async function getButtonsAmount()
     {
@@ -32,7 +36,8 @@
 
     function fetchVideo(number)
     {
-        vid.src = `/media/video/${test[2]}/${number}`
+        track.src = `/v/sub/${test[2]}/${number}`
+        vid.src = `/v/video/${test[2]}/${number}`
         vid.load()
     }
 

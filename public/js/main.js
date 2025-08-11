@@ -33,12 +33,15 @@ async function generateFolder(folders, data)
     
     for (let i = 0; i < folders.length; i++) {
         const card = document.createElement("a")
-        card.href = `/media/${folders[i]}`
+        card.href = `/v/${folders[i]}`
         card.classList.add("folder-card")
         const types = arrayOfTypes(data[folders[i]].types)
         const typesContainer = document.createElement('div')
         typesContainer.classList.add("types-container")
         typesContainer.innerHTML = types.map((type) => (type)).join("");
+        const langContainer = document.createElement('div');
+        langContainer.classList.add("lang-container");
+        langContainer.innerHTML = `<p class="types"><img src="images/ENG.svg" alt="My Image" width="20" height="20"></p>`;
         const cardContent = 
         `
         <img src="/folder/image/${folders[i]}" alt="My Image" width="400">
@@ -48,6 +51,7 @@ async function generateFolder(folders, data)
         `
         card.innerHTML = cardContent
         card.appendChild(typesContainer)
+        card.appendChild(langContainer)
         grid.append(card)
     }
 }
