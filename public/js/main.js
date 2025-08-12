@@ -2,6 +2,7 @@
 
 const grid = document.querySelector(".folder-grid")
 const filterInput = document.querySelector(".name-filter")
+const cardFilters = document.querySelectorAll(".button-filter")
 
 const series = document.querySelector(".series")
 const movies = document.querySelector(".movies")
@@ -9,6 +10,19 @@ const youtube = document.querySelector(".youtube")
 const anime = document.querySelector(".anime")
 const kids = document.querySelector(".kids")
 let text = ""
+let cards = ""
+const columns = 6;
+
+document.body.addEventListener("keydown", (e) => {
+    e.preventDefault()
+    if(e.key == "ArrowDown" || e.key == "ArrowUp" || e.key == "ArrowRight" || e.key == "ArrowLeft")
+    {
+        if (document.activeElement === document.body || document.activeElement === null) 
+        {
+            cards[0].focus()
+        }
+    }
+})
 
 
 const typeFilter = 
@@ -54,6 +68,83 @@ async function generateFolder(folders, data)
         card.appendChild(langContainer)
         grid.append(card)
     }
+    cards = grid.querySelectorAll(".folder-card")
+    tabSelect([filterInput,...cardFilters,...cards])
+}
+
+function tabSelect(tabOptions)
+{
+    tabOptions.forEach((tab, index) => {
+    tab.addEventListener("keydown", (e) => {
+      let newIndex = index;
+      if(newIndex == 0)
+      {
+        switch (e.key) {
+        case "ArrowRight":
+          newIndex = (index + 1) % tabOptions.length;
+          break;
+        case "ArrowLeft":
+          newIndex = (tabOptions.length - 1) % tabOptions.length;
+          break;
+        case "ArrowDown":
+          newIndex = (index + 1) % tabOptions.length;
+          break;
+        case "ArrowUp":
+          newIndex = (tabOptions.length - 1) % tabOptions.length;
+          break;
+        default:
+          return; // Ignore other keys
+      }
+      }
+      else if(newIndex > 0 && newIndex < 6)
+      {
+        switch (e.key) {
+        case "ArrowRight":
+          newIndex = (index + 1) % tabOptions.length;
+          break;
+        case "ArrowLeft":
+          newIndex = (index - 1 + tabOptions.length) % tabOptions.length;
+          break;
+        case "ArrowDown":
+          newIndex = (6) % tabOptions.length;
+          break;
+        case "ArrowUp":
+          newIndex = (0) % tabOptions.length;
+          break;
+        case "Enter":
+          document.activeElement.click();
+          break;
+        default:
+          return; // Ignore other keys
+      }
+      }
+      else
+      {
+        switch (e.key) {
+        case "ArrowRight":
+          newIndex = (index + 1) % tabOptions.length;
+          break;
+        case "ArrowLeft":
+          newIndex = (index - 1 + tabOptions.length) % tabOptions.length;
+          break;
+        case "ArrowDown":
+          newIndex = (index + columns) % tabOptions.length;
+          
+          break;
+        case "ArrowUp":
+          newIndex = (index - columns + tabOptions.length) % tabOptions.length;
+          break;
+        case "Enter":
+          document.activeElement.click();
+          break;
+        default:
+          return; // Ignore other keys
+      }
+      } 
+      tabOptions[newIndex].focus();
+      e.preventDefault(); // Prevent page scroll
+    });
+  });
 }
 
 function arrayOfTypes(data)
@@ -145,3 +236,4 @@ kids.addEventListener("click", async ()=>{
     else
     { typeFilter.kids = true; kids.classList.add("active"); await filterFetch(text);}
 })
+
