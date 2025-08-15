@@ -301,7 +301,22 @@ form img
 
 @media (min-width: 1000px) {
  
+  .sub-nav
+  {
+    padding-inline: 4rem 2rem;
+  }
 
+  .filter
+  {
+    padding: 1rem 0;
+    flex-basis: 58%;
+  }
+
+  .info-block
+  {
+    padding: 1rem;  
+    justify-content: end;
+  }
   .folder-grid
   {
     padding-inline: 4rem 2rem;
@@ -316,31 +331,45 @@ form img
   }
 
   .folder-card
-{
-  position: relative;
-  color: white;
-  display: block;
-  flex-basis: 18%;
-  background-color: #efefef;
-  height: 290px;
-  border: 2px solid #161616;
-  text-decoration: none;
-  overflow: hidden;
-  border-radius: 5px;
-}
+  {
+    flex-basis: 14%;
+  }
+
+  .button-grid
+  {
+    width: 55%;
+    justify-content: center;
+  }
 }
 
+@media (min-width: 1400px) {
+  .button-grid
+  {
+    width: 42%;
+  
+  }
+}
 
 
 
-@media (max-width: 1900px) {
+@media (min-width: 1800px) {
+  
+  .sub-nav
+  {
+    width: 85%;
+    margin: auto;
+  }
+  .filter,.info-block
+  {
+    flex-basis: 43%;
+  }
   .folder-grid
   {
-    width: 100%;
+    width: 85%;
   }
 
   .folder-card
   {
-    flex-basis: 15%;
+    flex-basis: 13.5%;
   }
 }
