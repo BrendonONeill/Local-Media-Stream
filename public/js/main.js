@@ -118,6 +118,28 @@ function tabSelect(tabOptions)
           return; // Ignore other keys
       }
       }
+      else if(newIndex > 5 && newIndex < 12)
+      {
+        switch (e.key) {
+        case "ArrowRight":
+          newIndex = (index + 1) % tabOptions.length;
+          break;
+        case "ArrowLeft":
+          newIndex = (index - 1 + tabOptions.length) % tabOptions.length;
+          break;
+        case "ArrowDown":
+          newIndex = (index + columns) % tabOptions.length;
+          break;
+        case "ArrowUp":
+          newIndex = (1) % tabOptions.length;
+          break;
+        case "Enter":
+          document.activeElement.click();
+          break;
+        default:
+          return; // Ignore other keys
+      }
+      }
       else
       {
         switch (e.key) {
@@ -129,7 +151,6 @@ function tabSelect(tabOptions)
           break;
         case "ArrowDown":
           newIndex = (index + columns) % tabOptions.length;
-          
           break;
         case "ArrowUp":
           newIndex = (index - columns + tabOptions.length) % tabOptions.length;
