@@ -23,7 +23,6 @@ cron.schedule('*/30 * * * *', () => {
 });
 
 export async function getFolders(req,res) {
-  
   res.json(content)
 }
 
@@ -49,32 +48,6 @@ export function getFoldersContentAmount(req,res)
   res.json(videosAmount)
 }
 
-export function getTest(req,res)
-{
-  let text = req.params.text ?? ""
-  let filters = req.body.types
-  let arrTypes = null
-  arrTypes  = activetypes(filters)
-  let data = content.folders
-  if(text.length < 1)
-  {
-    data = typeFilter(data,arrTypes)
-    res.json({"folders":data,"content":content})
-  }
-  else if(text.length < 3)
-  {
-    data = typeFilter(data,arrTypes)
-    data = data.filter((folder) => (folder.toLowerCase().includes(req.params.text)))
-    res.json({"folders":data,"content":content})
-  }
-  else
-  {
-    data = typeFilter(data,arrTypes)
-    data = advancedFiltering(text,data)
-    res.json({"folders":data,"content":content})
-  }
-}
-
 function activetypes(types)
 {
   let typesArr = []
@@ -98,19 +71,9 @@ function activetypes(types)
 
 function typeFilter(data, arrTypes)
 {
-  let filterData = data.filter((folder) => {
-        if(!arrTypes)
-        {
-          return true
-        }
-        for(let i = 0; i < arrTypes.length; i++)
-        {
-          if(content[folder].types[arrTypes[i]])
-          {
-            return true
-          }
-        }
-        return false
+  let filterData = data.filter((folderName) => {
+        let item = content[folderName]
+        return arrTypes.some((type) => item.types[type]);
   })
   return filterData
 }
@@ -151,7 +114,12 @@ function levenshteinDistance(s1, s2) {
     }
   }
   let number = dp[m][n];
-  if(n <= 3 || n <= 3)
+  let larger = Math.max(m,n)
+  let smaller = Math.min(m,n)
+  let space = larger - smaller
+
+  // need to clean up
+  if(n <= 3)
   {
     if(number <= 1)
     {
@@ -161,6 +129,10 @@ function levenshteinDistance(s1, s2) {
     {
       return [false,null]
     }
+  }
+  else if( n >= 3  && n <= 5 && space > 2)
+  {
+    return [true,number]
   }
   else if(n <= 6)
   {
@@ -175,7 +147,7 @@ function levenshteinDistance(s1, s2) {
   }
   else
   {
-    if(number < 6)
+    if(number < 5)
     {
       return [true,number]
     }
@@ -186,32 +158,67 @@ function levenshteinDistance(s1, s2) {
   }
 }
 
-function advancedFiltering(text, content)
+export function getTest(req,res)
 {
-    let split = text.split(" ")
+  let text = req.params.text ?? ""
+  if(text != "")
+  {
+    text = text.toLowerCase()
+  }
+  let filters = req.body.types
+  let arrTypes = null
+  arrTypes  = activetypes(filters)
+  let data = content.folders
+  if(arrTypes != null)
+  {
+    data = typeFilter(data,arrTypes)
+  }
+  if(text.length < 3)
+  {
+    data = data.filter((folder) => (folder.toLowerCase().includes(text)))
+    res.json({"folders":data,"content":content})
+  }
+  else
+  {
+    data = advancedFiltering(text,data)
+    res.json({"folders":data,"content":content})
+  }
+}
+
+function advancedFiltering(text, listOfFolders)
+{
+    let splitText = text.split(" ")
     let inform = []
-    for (let i = 0; i < split.length; i++) {
-      let a = content.filter((folder) => {
-        let nameSplit = folder.split(" ")
-        let match = false
-        for (let j = 0; j < nameSplit.length; j++) {
-          let k =  levenshteinDistance(split[i].toLowerCase(),nameSplit[j].toLowerCase())
-          if(k[0])
+    for (let i = 0; i < splitText.length; i++) {
+      for (let j = 0; j < listOfFolders.length; j++)
+      {
+        let word = splitText[i]
+        let folderNameSplit = listOfFolders[j].split(" ")
+        for (let k = 0; k < folderNameSplit.length; k++) {
+          let matchCheck =  levenshteinDistance(word.toLowerCase(),folderNameSplit[k].toLowerCase())
+          if(matchCheck[0])
           {
-            match = true
-            inform.push([folder,k[1]])
+            inform.push([listOfFolders[j],matchCheck[1]])
             break
           }
         }
-      })
+      } 
     }
     let sortedData = inform.sort((a, b) => (a[1] - b[1]))
+    let others = listOfFolders.filter((folder) => (folder.toLowerCase().includes(text)))
     let returnArr = []
     for(let i = 0; i < sortedData.length; i++)
     {
       if(!returnArr.includes(sortedData[i][0]))
       {
         returnArr.push(sortedData[i][0])
+      }
+    }
+    for(let i = 0; i < others.length; i++)
+    {
+      if(!returnArr.includes(others[i]))
+      {
+        returnArr.push(others[i])
       }
     }
     return returnArr
