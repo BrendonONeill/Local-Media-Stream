@@ -13,12 +13,13 @@ let text = ""
 let cards = ""
 const columns = 6;
 
-document.body.addEventListener("keydown", (e) => {
-    e.preventDefault()
+document.body.addEventListener("keydown", (e) => { 
     if(e.key == "ArrowDown" || e.key == "ArrowUp" || e.key == "ArrowRight" || e.key == "ArrowLeft")
     {
+      
         if (document.activeElement === document.body || document.activeElement === null) 
         {
+            e.preventDefault()
             cards[0].focus()
         }
     }
@@ -80,12 +81,6 @@ function tabSelect(tabOptions)
       if(newIndex == 0)
       {
         switch (e.key) {
-        case "ArrowRight":
-          newIndex = (index + 1) % tabOptions.length;
-          break;
-        case "ArrowLeft":
-          newIndex = (tabOptions.length - 1) % tabOptions.length;
-          break;
         case "ArrowDown":
           newIndex = (index + 1) % tabOptions.length;
           break;
@@ -112,6 +107,7 @@ function tabSelect(tabOptions)
           newIndex = (0) % tabOptions.length;
           break;
         case "Enter":
+          console.log(document.activeElement)
           document.activeElement.click();
           break;
         default:
