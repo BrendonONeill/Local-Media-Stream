@@ -119,7 +119,7 @@ function levenshteinDistance(s1, s2) {
   let space = larger - smaller
 
   // need to clean up
-  if(n <= 3)
+  if(n <= 4 || m <= 4 && n <= 5 && m <= 5 && space <= 1)
   {
     if(number <= 1)
     {
@@ -130,13 +130,20 @@ function levenshteinDistance(s1, s2) {
       return [false,null]
     }
   }
-  else if( n >= 3  && n <= 5 && space > 2)
+  else if(n >= 5 && n <= 8 && space <= 3)
   {
-    return [true,number]
+    if(number <= 4)
+    {
+      return [true,number]
+    }
+    else
+    {
+      return [false,null]
+    }
   }
-  else if(n <= 6)
+  else if(n >= 9 && n <= 16 && space <= 4)
   {
-    if(number < 3)
+    if(number <= 6)
     {
       return [true,number]
     }
@@ -153,7 +160,7 @@ function levenshteinDistance(s1, s2) {
     }
     else
     {
-      return [false,number]
+      return [false,null]
     }
   }
 }
