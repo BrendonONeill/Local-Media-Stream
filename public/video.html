@@ -14,10 +14,29 @@
     </nav>
     <main class="video-main">
         <div class="video-container">
-        <video id="videoPlayer" controls>
+            <video id="videoPlayer">
             <track kind="captions" src="" srclang="en" label="English" default ></track>
-        </video>
-    </div>
+            </video>
+            <div class="video-controls-main">
+                    <div class="video-range-container">
+                        <p class="currentTime vtime">0:00</p>
+                        <input type="range" name="" min="0" max="100" id="range">
+                        <p class="VideoTimeLength vtime">1:00:00</p>
+                    </div>
+                    <div class="video-controls">
+                        
+                        <button id="play"><img src="/images/video_play.svg" width="50" height="50" alt=""></button>
+                        <button id="full"><img src="/images/video_fullscreen.svg" width="50" height="50" alt=""></button>
+                        <button id="sub">Off</button>
+                        <select name="" id="speed">
+                            <option value="1x">1x</option>
+                            <option value="1x">0.5x</option>
+                            <option value="1x">1.5x</option>
+                            <option value="1x">2.5x</option>
+                        </select>
+                    </div>  
+            </div>
+        </div>
 
     <div class="button-grid">
 

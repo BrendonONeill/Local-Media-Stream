@@ -77,6 +77,11 @@ function tabSelect(tabOptions)
 {
     tabOptions.forEach((tab, index) => {
     tab.addEventListener("keydown", (e) => {
+      let ArrowKeys = ["ArrowUp","ArrowRight","ArrowDown", "ArrowLeft"]
+      if(!ArrowKeys.includes(e.key))
+      {
+        return
+      }
       let newIndex = index;
       if(newIndex == 0)
       {
@@ -105,10 +110,6 @@ function tabSelect(tabOptions)
           break;
         case "ArrowUp":
           newIndex = (0) % tabOptions.length;
-          break;
-        case "Enter":
-          console.log(document.activeElement)
-          document.activeElement.click();
           break;
         default:
           return; // Ignore other keys

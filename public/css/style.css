@@ -241,17 +241,79 @@ form img
 
 .video-container
 {
-  width: 100%;
-  padding: 2rem;
-  padding-block: 5rem;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
+  padding: 1rem;
+}
+
+.video-controls-main
+{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: white;
+} 
+
+.video-controls
+{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.video-controls button
+{
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#sub
+{
+  color: white;
+  border-radius: 5px;
+  border: 3px solid white;
+}
+
+.video-controls label
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  text-align: center;
+}
+
+.video-range-container
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem;
+}
+#range
+{
+  flex-basis: 80%;
+  height: 10px;
+  background-color: lime;
+}
+
+
+.vtime
+{
+  flex-basis: 8%;
 }
 
 #videoPlayer
 {
-  width: 50%;
+ 
 }
 
 .button-grid
@@ -280,6 +342,10 @@ form img
 .video-main
 {
   min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 
 .back-button
@@ -322,7 +388,7 @@ form img
     padding-inline: 4rem 2rem;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content:flex-start ;
     width: 100%;
     margin: auto;
