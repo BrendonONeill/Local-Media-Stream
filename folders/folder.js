@@ -167,6 +167,7 @@ function levenshteinDistance(s1, s2) {
 
 export function getTest(req,res)
 {
+  debugger
   let text = req.params.text ?? ""
   if(text != "")
   {

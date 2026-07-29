@@ -211,8 +211,8 @@ async function filterFetch(text)
 filterInput.addEventListener("input", (e) => {
     if(e.target.value != "")
     {
-        text = e.target.value
-        filterFetch(e.target.value)
+        let text = e.target.value
+        filterFetch(text)
     }
     else
     {
